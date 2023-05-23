@@ -1,0 +1,22 @@
+{
+  "name": "back-ecommerce",
+  "version": "1.0.0",
+  "description": "back end for ecommerce",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "clear && node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/s-mendes/back-ecommerce.git"
+  },
+  "keywords": [],
+  "author": "Samuel Mendes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/s-mendes/back-ecommerce/issues"
+  },
+  "homepage": "https://github.com/s-mendes/back-ecommerce#readme"
+}
