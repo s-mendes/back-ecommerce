@@ -1,4 +1,6 @@
-import { user, product } from './database'
+import { createUser, getAllUsers, searchProductsByName } from './database'
 
-console.log(user);
-console.log(product);
+createUser("u003", "Astrodev", "astrodev@email.com", "astrodev99")
+console.table(getAllUsers())
+
+console.table(searchProductsByName("Gamer"))
