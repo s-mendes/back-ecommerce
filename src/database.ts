@@ -1,5 +1,5 @@
 type TUser = {
-    id:string,
+    id:string | number,
     name:string,
     email:string,
     password:string,
@@ -7,7 +7,7 @@ type TUser = {
 }
 
 type TProduct = {
-    id:string,
+    id:string | number,
     name:string,
     price:number,
     description:string,
@@ -47,3 +47,36 @@ export const product: TProduct[] = [
         imageUrl: "https://picsum.photos/seed/Monitor/400"
     }
 ]
+
+export const createUser = (id: string|number, name: string, email: string, password: string) => {
+    const newUser:TUser = {
+        id: id,
+        name: name,
+        email: email,
+        password: password,
+        created_at: new Date().toISOString()
+    }
+    user.push(newUser);
+    return("Cadastro realizado com sucesso")
+}
+
+export const getAllUsers = () => {
+    return user;
+}
+
+export const createProduct = (id: string|number, name: string, price: number, description: string, imageUrl: string) => {
+    const newProduct: TProduct = {
+        id: id,
+        name: name,
+        price: price,
+        description: description,
+        imageUrl: imageUrl
+    }
+    product.push(newProduct);
+    return("Cadastro realizado com sucesso")
+}
+
+export const searchProductsByName = (name: string) => {
+    const prodFilter = product.filter((prod) => prod.name.toLowerCase().includes(name.toLowerCase()))
+    return prodFilter
+}
