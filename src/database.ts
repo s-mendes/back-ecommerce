@@ -1,4 +1,4 @@
-type TUser = {
+export type TUser = {
     id:string | number,
     name:string,
     email:string,
@@ -6,7 +6,7 @@ type TUser = {
     created_at:string
 }
 
-type TProduct = {
+export type TProduct = {
     id:string | number,
     name:string,
     price:number,
@@ -14,7 +14,7 @@ type TProduct = {
     imageUrl:string
 }
 
-export const user: TUser[] = [
+export const users: TUser[] = [
     {
         id: "u001",
         name: "Fulano",
@@ -31,7 +31,7 @@ export const user: TUser[] = [
     },
 ]
 
-export const product: TProduct[] = [
+export const products: TProduct[] = [
     {
         id: "prod001",
         name: "Mouse Gamer",
@@ -56,12 +56,17 @@ export const createUser = (id: string|number, name: string, email: string, passw
         password: password,
         created_at: new Date().toISOString()
     }
-    user.push(newUser);
+    users.push(newUser);
+    console.log(users)
     return("Cadastro realizado com sucesso")
 }
 
 export const getAllUsers = () => {
-    return user;
+    return users;
+}
+
+export const getAllProducts = () => {
+    return products;
 }
 
 export const createProduct = (id: string|number, name: string, price: number, description: string, imageUrl: string) => {
@@ -72,11 +77,13 @@ export const createProduct = (id: string|number, name: string, price: number, de
         description: description,
         imageUrl: imageUrl
     }
-    product.push(newProduct);
+    products.push(newProduct);
+    console.log(products);
     return("Cadastro realizado com sucesso")
 }
 
 export const searchProductsByName = (name: string) => {
-    const prodFilter = product.filter((prod) => prod.name.toLowerCase().includes(name.toLowerCase()))
+    const prodFilter = products.filter((prod) => prod.name.toLowerCase().includes(name.toLowerCase()))
     return prodFilter
 }
+
