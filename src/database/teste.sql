@@ -25,8 +25,25 @@ CREATE TABLE products (
 );
 
 INSERT INTO products (id, name, price, description, image_url) VALUES
-("prod001","Mouse gamer",250,"Melhor mouse do mercado!","https://picsum.photos/seed/Mouse%20gamer/400"),
-("prod002","Monitor",900,"Monitor LED Full HD 24 polegadas","https://picsum.photos/seed/Monitor/400"),
-("prod003","Teclado Mecânico RGB",350,"Teclado mecânico com retroiluminação RGB personalizável","https://picsum.photos/seed/Teclado%20Mec%C3%A2nico/400"),
-("prod004","Headset Gamer com Microfone",400,"Headset gamer com som imersivo e microfone integrado","https://picsum.photos/seed/Headset%20Gamer/400"),
-("prod005","Cadeira Gamer Ergonômica",800,"Cadeira gamer ergonômica com ajustes de altura e inclinação","https://picsum.photos/seed/Cadeira%20Gamer/400");
+('prod001','Mouse gamer',250,'Melhor mouse do mercado!','https://picsum.photos/seed/Mouse%20gamer/400'),
+('prod002','Monitor',900,'Monitor LED Full HD 24 polegadas','https://picsum.photos/seed/Monitor/400'),
+('prod003','Teclado Mecânico RGB',350,'Teclado mecânico com retroiluminação RGB personalizável','https://picsum.photos/seed/Teclado%20Mec%C3%A2nico/400'),
+('prod004','Headset Gamer com Microfone',400,'Headset gamer com som imersivo e microfone integrado','https://picsum.photos/seed/Headset%20Gamer/400'),
+('prod005','Cadeira Gamer Ergonômica',800,'Cadeira gamer ergonômica com ajustes de altura e inclinação','https://picsum.photos/seed/Cadeira%20Gamer/400');
+
+SELECT * FROM users;
+
+SELECT * FROM products;
+
+SELECT * FROM products
+WHERE name LIKE '%gamer';
+
+DELETE FROM users WHERE id = 'user003';
+
+UPDATE products
+SET
+    name = 'Mouse Gamer Logitech',
+    price = '300',
+    description = 'Mouse gamer sem fio com rápida resposta para jogos',
+    image_url = 'https://picsum.photos/seed/Mouse%20gamer%20logitech/400'
+WHERE id = 'prod001';
