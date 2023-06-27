@@ -47,3 +47,32 @@ SET
     description = 'Mouse gamer sem fio com rápida resposta para jogos',
     image_url = 'https://picsum.photos/seed/Mouse%20gamer%20logitech/400'
 WHERE id = 'prod001';
+
+CREATE TABLE purchases (
+    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    buyer TEXT NOT NULL,
+    total_price REAL NOT NULL,
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (buyer) REFERENCES users (id)
+);
+
+DROP TABLE purchases;
+
+INSERT INTO purchases (id, buyer, total_price, created_at) VALUES
+('purchase001', 'user001', 250, '27/06/2023'),
+('purchase002', 'user002', 900, '27/06/2023'),
+('purchase003', 'user003', 350, '27/06/2023');
+
+UPDATE purchases SET total_price = 350
+WHERE id = 'purchase001';
+
+SELECT
+    purchases.id,
+    purchases.buyer,
+    users.name,
+    users.email,
+    purchases.total_price ,
+    purchases.created_at AS 'Data da Compra'
+FROM purchases
+INNER JOIN users ON purchases.buyer = users.id;
+
