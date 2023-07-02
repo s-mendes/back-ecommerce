@@ -76,3 +76,27 @@ SELECT
 FROM purchases
 INNER JOIN users ON purchases.buyer = users.id;
 
+CREATE TABLE purchases_products (
+    purchase_id TEXT NOT NULL,
+    product_id TEXT NOT NULL,
+    quantity INT NOT NULL,
+    FOREIGN KEY (purchase_id) REFERENCES purchases(id)
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+        ON UPDATE CASCADE 
+        ON DELETE CASCADE
+);
+
+DROP TABLE purchases_products;
+
+INSERT INTO purchases_products (purchase_id, product_id, quantity) VALUES
+('purchase001', 'prod001', 1),
+('purchase002', 'prod002', 1),
+('purchase002', 'prod003', 2),
+('purchase003', 'prod004', 1),
+('purchase003', 'prod005', 1);
+
+SELECT * FROM purchases_products
+INNER JOIN products ON purchases_products.product_id = products.id
+INNER JOIN purchases ON purchases_products.purchase_id = purchases.id;
