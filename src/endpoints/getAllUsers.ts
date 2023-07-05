@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
-import { users } from '../database/database';
+import { db } from '../database/knex';
 
-export function getAllUsrs (req: Request, res: Response):void {
+export async function getAllUsrs (req: Request, res: Response):Promise<void> {
     try {
-        res.status(200).send(users)
+        const users = await db.raw(`
+        SELECT * FROM users
+        `)
+        res.status(200).send(users);
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).send(error);
     }
 }

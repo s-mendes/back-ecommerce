@@ -2,20 +2,20 @@ import { Request, Response } from 'express';
 import { TProduct } from '../interfaces/types/product.type';
 import { db } from '../database/knex'
 
-export async function getProductsById (req: Request, res: Response):Promise<void> {
+export async function getProductsByName (req: Request, res: Response):Promise<void> {
     try {
-        const id = req.params.id as string
+        const q = req.query.q as string
 
-        if (id.length < 1) {
+        if (q.length < 1) {
             res.status(404)
-            throw new Error("Insert a id to search")
+            throw new Error("Insert a product search")
         }
         
         const products = await db.raw(`
         SELECT * FROM products;
         `)
 
-        const result: TProduct[] = products.filter((prod:any) => prod.id.toLowerCase().includes(id.toLowerCase()))
+        const result: TProduct[] = products.filter((prod:any) => prod.name.toLowerCase().includes(q.toLowerCase()))
         res.status(200).send(result)
 
     } catch (error) {

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { TProduct } from '../interfaces/types/product.type';
 import { db } from '../database/knex'
 
-export async function getProductsById (req: Request, res: Response):Promise<void> {
+export async function getPurchaseById (req: Request, res: Response):Promise<void> {
     try {
         const id = req.params.id as string
 
@@ -11,11 +11,11 @@ export async function getProductsById (req: Request, res: Response):Promise<void
             throw new Error("Insert a id to search")
         }
         
-        const products = await db.raw(`
-        SELECT * FROM products;
+        const purchases = await db.raw(`
+        SELECT * FROM purchases;
         `)
 
-        const result: TProduct[] = products.filter((prod:any) => prod.id.toLowerCase().includes(id.toLowerCase()))
+        const result: TProduct[] = purchases.filter((prod:any) => prod.id.toLowerCase().includes(id.toLowerCase()))
         res.status(200).send(result)
 
     } catch (error) {
