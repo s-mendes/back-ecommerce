@@ -100,3 +100,4 @@ INSERT INTO purchases_products (purchase_id, product_id, quantity) VALUES
 SELECT * FROM purchases_products
 INNER JOIN products ON purchases_products.product_id = products.id
 INNER JOIN purchases ON purchases_products.purchase_id = purchases.id;
+

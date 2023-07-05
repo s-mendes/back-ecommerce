@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import { products } from '../database/database';
-import { TProduct } from '../interfaces/types/product.type';
+import { db } from '../database/knex'
 
-export function createProducts (req: Request, res: Response):void {
+export async function createProducts (req: Request, res: Response):Promise<void> {
     try {
         const id = req.body.id as string
         const name = req.body.name as string
@@ -10,7 +9,11 @@ export function createProducts (req: Request, res: Response):void {
         const price = req.body.price as number
         const imageUrl = req.body.url as string
 
-        const idExists = products.find(product => product.id === id)
+        const  products = await db.raw(`
+        SELECT * from products;
+        `)
+
+        const idExists = products.find((product:any) => product.id === id)
 
         if (idExists) {
             res.status(421)
@@ -38,15 +41,10 @@ export function createProducts (req: Request, res: Response):void {
             }
         }
 
-        const newProduct: TProduct = {
-            id: id,
-            name: name,
-            price: price,
-            description: description,
-            imageUrl: imageUrl
-        }
-        products.push(newProduct);
-        console.log(products);
+        await db.raw(`
+        INSERT INTO products (id, name, price, description, image_url) VALUES
+        ('${id}', '${name}', '${price}', '${description}', '${imageUrl}');
+        `)
         res.status(200).send("Registration done successfully")
 
     } catch (error) {
