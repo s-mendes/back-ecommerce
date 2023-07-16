@@ -10,7 +10,7 @@ LabeCommerce is an e-commerce platform that allows you to create online stores. 
 
 The LabeCommerce API is based on HTTP requests and returns responses in JSON format. To get started, you need the base URL: `http://localhost:3003`. From there, you can explore the different endpoints available to create, view, edit, and delete users, products, and purchases.
 
-##Documentation
+## Documentation
 
 [Click here ](https://documenter.getpostman.com/view/17432210/2s946eADNj)
 
