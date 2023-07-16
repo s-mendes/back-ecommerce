@@ -14,6 +14,7 @@ import { editProduct } from './endpoints/editProduct';
 import { createPurchase } from './endpoints/createPurchase';
 import { getProductsById } from './endpoints/getProductsById';
 import { getPurchaseById } from './endpoints/getPurchaseById';
+import { deletePurchase } from './endpoints/deletePurchase';
 
 //criação do servidor express 👇🏽
 const app = express();
@@ -49,3 +50,4 @@ app.delete('/users/:id', deleteUsers);
 
 app.post('/purchase', createPurchase);
 app.get('/purchase/:id', getPurchaseById);
+app.delete('/purchase/:id', deletePurchase);

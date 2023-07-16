@@ -1,29 +1,28 @@
 import { Request, Response } from 'express';
-import { products } from '../database/database';
+import { db } from '../database/knex';
 
-export function editProduct (req: Request, res: Response): void {
-    const id = req.params.id as string
-
+export async function editProduct (req: Request, res: Response): Promise<void> {
     try {
+        const idToEdit = req.params.id as string
 
-        const newId = req.body.id as number
+        const newId = req.body.id as number | string
         const newName = req.body.name as string
         const newDescription = req.body.description as string
         const newPrice = req.body.price as number
         const newImageUrl = req.body.url as string
 
-        const product = products.find(product => product.id === id)
+        const [ product ] = await db("products").where({ id: idToEdit })
 
         if (!product) {
             res.status(404)
-            throw new Error(`Product ${id} not found`)
+            throw new Error(`Product ${idToEdit} not found`)
         }
-
-        const idExists = products.find(product => product.id === newId)
-
-        if (idExists) {
-            res.status(421)
-            throw new Error(`Product id ${newId} already exist`)
+        if (newId) {
+            const idExists = await db("products").where({ id: newId });
+            if (idExists) {
+                res.status(421)
+                throw new Error(`Product id ${newId} already exist`)
+            }
         }
 
         if (newName !== undefined) {
@@ -47,11 +46,15 @@ export function editProduct (req: Request, res: Response): void {
             }
         }
 
-        product.id = newId || product.id
-        product.name = newName || product.name
-        product.description = newDescription || product.description
-        product.price = newPrice || product.price
-        product.imageUrl = newImageUrl || product.imageUrl
+        const newProduct = {
+            id: newId || product.id,
+            name: newName || product.name,
+            description: newDescription || product.description,
+            price: newPrice || product.price,
+            image_url: newImageUrl || product.imageUrl
+        }
+
+        await db("products").update(newProduct).where({id: idToEdit})
 
         res.status(200).send(`Product ${product.name} edited successfully`)
 

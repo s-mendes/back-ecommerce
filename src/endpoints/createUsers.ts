@@ -8,9 +8,7 @@ export async function createUsers (req: Request, res: Response):Promise<void> {
         const email = req.body.email as string;
         const password = req.body.password as string;
 
-        const users = await db.raw(`
-        SELECT email FROM users;
-        `);
+        const users = await db("users");
 
         const searchEmail = users.find((user:any) => user.email === email)
 
@@ -19,10 +17,13 @@ export async function createUsers (req: Request, res: Response):Promise<void> {
             throw new Error(`User ${name} already exists`)
         }
         
-        await db.raw(`
-        INSERT INTO users (id, name, email, password, created_at) VALUES 
-        ("${id}", "${name}", "${email}", "${password}", "${new Date().toISOString()}");
-        `)
+        await db("users").insert({
+            id: id,
+            name: name,
+            email: email,
+            password: password,
+            created_at: new Date().toISOString()
+        })
 
         res.status(200).send("Registration done successfully")
 

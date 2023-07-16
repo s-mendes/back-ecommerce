@@ -11,12 +11,14 @@ export async function getProductsById (req: Request, res: Response):Promise<void
             throw new Error("Insert a id to search")
         }
         
-        const products = await db.raw(`
-        SELECT * FROM products;
-        `)
+        const product = await db.select('*').from('products').where('id', id)
 
-        const result: TProduct[] = products.filter((prod:any) => prod.id.toLowerCase().includes(id.toLowerCase()))
-        res.status(200).send(result)
+        if (product.length < 1) {
+            res.status(404)
+            throw new Error("Product not found")
+        }
+
+        res.status(200).send(product)
 
     } catch (error) {
         if (res.statusCode === 200) {
