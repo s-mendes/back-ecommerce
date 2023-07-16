@@ -1,20 +1,20 @@
 import { Request, Response } from 'express';
-import { db } from '../database/knex';
+import { db } from '../database/knex'
 
-export async function deleteProducts(req: Request, res: Response):Promise<void> {
+export async function deletePurchase (req: Request, res: Response): Promise<void> {
     try {
         const idToDelete = req.params.id as string
-        const [ product ] = await db("products").where({ id: idToDelete })
-    
-        if (!product) {
+
+        const [ purchase ] = await db("purchases").where({ id: idToDelete })
+        if (!purchase) {
             res.status(404)
             throw new Error("'id' não encontrado.")
         }
-        await db("products").where({ id: idToDelete }).del()
-        res.status(200).send({ message: "Produto deletado com sucesso" })
 
+        await db("purchases").where({ id: idToDelete }).del()
+
+        res.status(200).send({ message: "Compra deletado com sucesso" })
     } catch (error) {
-
         if (res.statusCode === 200) {
             res.status(500)
         }

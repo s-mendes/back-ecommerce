@@ -4,19 +4,16 @@ import { db } from '../database/knex'
 
 export async function getProductsByName (req: Request, res: Response):Promise<void> {
     try {
-        const q = req.query.q as string
+        const q = req.query.name as string
 
         if (q.length < 1) {
             res.status(404)
             throw new Error("Insert a product search")
         }
         
-        const products = await db.raw(`
-        SELECT * FROM products;
-        `)
+        const product = await db.select('*').from('products').where('name', 'like', `%${q}%`)
 
-        const result: TProduct[] = products.filter((prod:any) => prod.name.toLowerCase().includes(q.toLowerCase()))
-        res.status(200).send(result)
+        res.status(200).send(product)
 
     } catch (error) {
         if (res.statusCode === 200) {

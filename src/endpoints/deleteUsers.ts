@@ -1,18 +1,20 @@
 import { Request, Response } from 'express';
-import { users } from '../database/database';
+import { db } from '../database/knex';
 
-export function deleteUsers (req: Request, res: Response):void {
-    const id = req.params.id as string
+export async function deleteUsers (req: Request, res: Response):Promise<void> {
     try {
-        const userIndex = users.findIndex(user => user.id === id)
+        const idToDelete = req.params.id as string
+        
+        const [ user ] = await db("users").where({ id: idToDelete});
 
-        if (userIndex < 0) {
+        if (!user) {
             res.status(404)
-            throw new Error(`User ${id} not found`)
+            throw new Error("'id' not found")
         }
 
-        users.splice(userIndex, 1)
-        res.status(200).send(`User ${id} deleted successfully`)
+        await db("users").where({ id: idToDelete }).del();
+        
+        res.status(200).send(`User ${idToDelete} deleted successfully`)
     } catch (error) {
 
         if (res.statusCode === 200) {

@@ -9,9 +9,7 @@ export async function createProducts (req: Request, res: Response):Promise<void>
         const price = req.body.price as number
         const imageUrl = req.body.url as string
 
-        const  products = await db.raw(`
-        SELECT * from products;
-        `)
+        const products = await db("products")
 
         const idExists = products.find((product:any) => product.id === id)
 
@@ -41,10 +39,14 @@ export async function createProducts (req: Request, res: Response):Promise<void>
             }
         }
 
-        await db.raw(`
-        INSERT INTO products (id, name, price, description, image_url) VALUES
-        ('${id}', '${name}', '${price}', '${description}', '${imageUrl}');
-        `)
+        await db("products").insert({
+            id,
+            name,
+            price,
+            description,
+            image_url: imageUrl
+        })
+
         res.status(200).send("Registration done successfully")
 
     } catch (error) {
